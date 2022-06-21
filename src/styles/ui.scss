@@ -1,0 +1,212 @@
+@import "variables";
+@import "mixins";
+
+.ui-button {
+  position: relative;
+  display: inline-block;
+  padding: 1px 28px 0;
+  height: 50px;
+  line-height: 49px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: $black;
+  font-family: $font-family;
+  transition: background-color $trans;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+
+  @include noselect;
+
+  &[disabled],
+  &.disabled {
+    box-shadow: none;
+    background-color: #979DA9;
+    cursor: not-allowed;
+  }
+
+  .ui-button-content {
+    position: relative;
+    display: block;
+
+    .ui-button-text {
+      //display: inline-block;
+      display: block;
+      will-change: transform;
+      transition: transform $trans;
+    }
+  }
+
+
+  &.ui-button-orange {
+    color: #FFFFFF;
+    background-color: $primary;
+    border: none;
+
+    &[disabled],
+    &.disabled {
+      background-color: #979DA9;
+    }
+
+    &:hover, &:focus {
+      background-color: darken($primary, 10%);
+
+      &[disabled],
+      &.disabled {
+        background-color: #979DA9;
+      }
+    }
+    &:active {
+      background-color: darken($primary, 15%);
+
+      &[disabled],
+      &.disabled {
+        background-color: #979DA9;
+      }
+    }
+
+    .ui-button-spinner {
+      .spinner-circle {
+        stroke: #FFF;
+        stroke-opacity: .15;
+      }
+      .spinner-spline {
+        stroke: #FFF;
+      }
+    }
+  }
+
+  &.ui-button-white {
+    color: $black;
+    background-color: #FFFFFF;
+    border: 1px solid rgba($black, .3);
+
+    &:hover, &:focus {
+      background-color: #f2f2f2;
+
+      &[disabled],
+      &.disabled {
+        background-color: #FFFFFF;
+      }
+    }
+    &:active {
+      background-color: #e5e5e5;
+
+      &[disabled],
+      &.disabled {
+        background-color: #FFFFFF;
+      }
+    }
+  }
+
+  &.ui-button-transparent {
+    color: #FFFFFF;
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+
+    &:hover, &:focus {
+      background-color: rgba(255,255,255,.1);
+
+      &[disabled],
+      &.disabled {
+        background-color: transparent;
+      }
+    }
+    &:active {
+      background-color: rgba(255,255,255,.5);
+
+      &[disabled],
+      &.disabled {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &.ui-button-appearance-link {
+    opacity: .5;
+
+    .ui-button-text {
+      .back-icon, .back-text {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .back-icon {
+        margin-left: -4px;
+      }
+      .back-text {
+        margin-left: 8px;
+        line-height: 20px;
+      }
+    }
+
+    &:hover, &:focus {
+      opacity: .75;
+    }
+    &:active {
+      opacity: 1;
+    }
+  }
+
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+  }
+
+  &.loading {
+    .ui-button-content {
+      .ui-button-text {
+        transform: translateX(12px) rotate(0.0001deg);
+      }
+    }
+  }
+}
+
+.ui-button-spinner {
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: -12px;
+  top: 50%;
+  margin-top: -9px;
+  will-change: transform;
+
+  .ui-button-spinner-svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    will-change: transform;
+    animation: spin 1s infinite linear;
+
+    .spinner-spline {
+      stroke: $primary;
+    }
+  }
+
+  &.ui-button-spinner-enter {
+    transform: scale(0);
+    opacity: 0.01;
+  }
+  &.ui-button-spinner-enter-active {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform $trans, opacity $trans;
+  }
+  &.ui-button-spinner-exit {
+    transform: scale(1);
+    opacity: 1;
+  }
+  &.ui-button-spinner-exit-active {
+    transform: scale(0);
+    opacity: 0.01;
+    transition: transform $trans, opacity $trans;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(-360deg); }
+  100% { transform: rotate(0deg); }
+}

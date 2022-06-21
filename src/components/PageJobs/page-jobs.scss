@@ -1,0 +1,17 @@
+.section-content {
+  display: flex;
+  padding-top: 30px;
+
+  .filters-container {
+    flex-shrink: 0;
+    width: 250px;
+    padding: 30px;
+    margin-right: 20px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+  }
+
+  .content {
+    height: 2000px;
+  }
+}

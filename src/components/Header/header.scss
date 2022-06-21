@@ -1,0 +1,48 @@
+@import "src/styles/variables";
+
+.header {
+  position: fixed;
+  top: 0;
+  background-color: $dark-blue;
+  width: 100%;
+  height: 100px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: height $trans-semi-slow;
+
+  &.scrolled {
+    height: 75px;
+  }
+
+  .header-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .header-input {
+      height: 50px;
+      width: 100%;
+      padding: 0 10px;
+      border-radius: 8px;
+      margin-right: 15px;
+    }
+
+    .radius-select {
+      height: 50px;
+      padding: 0 10px;
+      border-radius: 8px;
+      width: 200px;
+      margin-right: 15px;
+
+      background-image:
+              linear-gradient(45deg, transparent 50%, gray 50%),
+              linear-gradient(135deg, gray 50%, transparent 50%);
+      background-position:
+              calc(100% - 20px) calc(1em + 10px),
+              calc(100% - 15px) calc(1em + 10px);
+      background-size:
+              5px 5px;
+      background-repeat: no-repeat;
+    }
+  }
+}

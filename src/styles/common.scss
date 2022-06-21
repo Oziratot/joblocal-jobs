@@ -1,0 +1,60 @@
+@import "variables";
+
+body {
+  font-kerning: auto;
+  font-family: $font-family;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: $black;
+  background-color: $light-grey;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 100px;
+}
+
+.container {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.page-title {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 24px;
+  line-height: 36px;
+  margin-bottom: 30px;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+}
+
+.loader {
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ui-button-spinner {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+}

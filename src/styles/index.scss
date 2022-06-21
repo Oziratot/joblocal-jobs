@@ -1,1 +1,8 @@
 @import "reset";
+@import "common";
+@import "ui";
+@import "src/components/PageJobs/page-jobs";
+@import "src/components/Header/header";
+@import "../components/Job/job";
+@import "../components/JobDetails/job-details";
+@import "../components/Pagination/pagination";

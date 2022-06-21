@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+    <g fill="none" fill-rule="evenodd">
+        <circle class="spinner-circle" cx="9" cy="9" r="8" stroke="#333" stroke-opacity=".1" stroke-width="2"/>
+        <path class="spinner-spline" stroke="#FFF" stroke-linecap="round" stroke-width="2" d="M17,9 C17,4.581722 13.418278,1 9,1"/>
+    </g>
+</svg>
