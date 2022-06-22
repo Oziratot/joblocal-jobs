@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { stringify } from 'qs';
 
-axios.defaults.baseURL = 'https://staging-api.joblocal.de/v4';
+axios.defaults.baseURL = 'https://api.joblocal.de/v4';
 axios.defaults.paramsSerializer = (params) => stringify(params, { arrayFormat: 'comma' });
 
 export const Api = {
@@ -13,6 +13,7 @@ export const Api = {
                 'search.query': params.search ?? undefined,
                 'search.location': params.location ?? undefined,
                 'filter.radius': params.radius,
+                'page.number': params.page,
             }
         });
     },

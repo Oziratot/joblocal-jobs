@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { searchJobsAsync } from "../../actions/jobs";
 import { useDispatch, useSelector } from "react-redux";
 import Job from "../Job/Job";
@@ -31,21 +31,12 @@ function PageJobsLoading(props) {
 }
 
 function PageJobs({ match, history, jobResultsById }) {
+    const dispatch = useDispatch();
+    const isMountedRef = useRef(false);
     const jobs = useSelector((state) => state.jobs.jobs);
-    const { facetWorkingTimes, facetQualifications, facetEmploymentTypes } = jobs;
-    const meta = useSelector((state) => state.jobs.jobs.meta);
-    const paginationInfo = useMemo(() => {
-        if (meta) {
-            return {
-                pagination: meta[endpoint].meta.pagination,
-                links: meta[endpoint].links,
-            };
-        } else {
-            return {}
-        }
-    }, [meta]);
-
-    const { pagination } = paginationInfo;
+    const { facetWorkingTimes, facetQualifications, facetEmploymentTypes, meta, currentParams } = jobs;
+    const pagination = useMemo(() =>  meta[endpoint].meta.pagination, [meta]);
+    const [currentPage, setCurrentPage] = useState(pagination.currentPage);
 
     const jobResults = useMemo(() => {
         if (jobResultsById) {
@@ -54,6 +45,17 @@ function PageJobs({ match, history, jobResultsById }) {
             return [];
         }
     }, [jobResultsById]);
+
+    useEffect(() => {
+        if (isMountedRef.current) {
+            dispatch(searchJobsAsync({
+                ...currentParams,
+                page: currentPage,
+            }))
+        }
+
+        isMountedRef.current = true;
+    }, [currentPage]);
 
     return (
         <>
@@ -72,7 +74,13 @@ function PageJobs({ match, history, jobResultsById }) {
                                     </li>
                                 ))}
                             </ul>
-                            {/*<Pagination paginationInfo={paginationInfo} />*/}
+                            <Pagination
+                                onPageChange={setCurrentPage}
+                                totalPages={pagination.totalPages}
+                                currentPage={pagination.currentPage}
+                                pageSize={pagination.count}
+                                className="pagination"
+                            />
                         </div>
                     </div>
                 </div>

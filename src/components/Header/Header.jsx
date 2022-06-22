@@ -19,7 +19,7 @@ function Header() {
     const dispatch = useDispatch()
     const [search, setSearch] = useState();
     const [location, setLocation] = useState();
-    const [radius, setRadius] = useState('5');
+    const [radius, setRadius] = useState('0');
     const [clientWindowHeight, setClientWindowHeight] = useState(0);
     const loading = useSelector((state) => state.jobs.jobs.loading);
 

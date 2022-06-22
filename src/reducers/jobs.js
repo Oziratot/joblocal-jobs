@@ -16,9 +16,10 @@ const jobsReducer = createReducer(jobsInitialState)
         loading: true,
         initial: false,
     }))
-    .handleAction(actions.searchJobs.success, (state, { payload }) => ({
+    .handleAction(actions.searchJobs.success, (state, { payload, meta }) => ({
         ...state,
         ...normalize(payload, { endpoint: '/search-jobs' }),
+        currentParams: meta,
         loading: false,
         success: true,
     }))

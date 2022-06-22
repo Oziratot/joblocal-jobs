@@ -16,16 +16,13 @@ export function searchJobsAsync(params) {
             Api.getCoords({ query: location })
                 .then((res) => {
                     const { latitude: lat, longitude: lon } = res.data.data[0];
-                    // const locationToSend = new URLSearchParams();
-                    // locationToSend.append('', lat);
-                    // locationToSend.append('', lon);
                     Api.searchJobs({ location: `${lat},${lon}`, ...rest })
-                        .then((res) => dispatch(searchJobs.success(res.data)))
+                        .then((res) => dispatch(searchJobs.success(res.data. params)))
                         .catch((error) => dispatch(searchJobs.failure(error)))
                 })
         } else {
             Api.searchJobs(params)
-                .then((res) => dispatch(searchJobs.success(res.data)))
+                .then((res) => dispatch(searchJobs.success(res.data, params)))
                 .catch((error) => dispatch(searchJobs.failure(error)))
         }
     }
