@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useMemo, useRef } from "react";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as LocationIcon } from "../../assets/svg/location.svg";
 import { searchJobsAsync } from "../../actions/jobs";

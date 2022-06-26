@@ -11,12 +11,12 @@ export function searchJobsAsync(params) {
     return (dispatch) => {
         dispatch(searchJobs.request());
 
-        if (params.location) {
-            const { location, ...rest } = params;
-            Api.getCoords({ query: location })
+        if (params.search?.location) {
+            const { search, ...rest } = params;
+            Api.getCoords({ query: search.location })
                 .then((res) => {
                     const { latitude: lat, longitude: lon } = res.data.data[0];
-                    Api.searchJobs({ location: `${lat},${lon}`, ...rest })
+                    Api.searchJobs({ ...rest, search: { ...rest.search, location: `${lat},${lon}` } })
                         .then((res) => dispatch(searchJobs.success(res.data, params)))
                         .catch((error) => dispatch(searchJobs.failure(error)))
                 })

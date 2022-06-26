@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchJobsAsync } from "../../actions/jobs";
 import Button from "../Button/Button";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const radiusSelectOptions = [
     { label: '5 km', value: '5' },
@@ -15,30 +17,34 @@ const radiusSelectOptions = [
     { label: 'All over', value: '0' },
 ];
 
-function Header() {
-    const dispatch = useDispatch()
-    const [search, setSearch] = useState();
-    const [location, setLocation] = useState();
-    const [radius, setRadius] = useState('0');
+function Header({ filtersApplied, setFiltersApplied }) {
+    const history = useHistory();
+    const match = useRouteMatch();
+    const dispatch = useDispatch();
+    const [search, setSearch] = useState({ query: '', location: '' });
     const [clientWindowHeight, setClientWindowHeight] = useState(0);
     const loading = useSelector((state) => state.jobs.jobs.loading);
 
     const handleScroll = useCallback(() => setClientWindowHeight(window.scrollY), [window.scrollY]);
 
     const handleSearchChange = useCallback((e) => {
-        setSearch(e.target.value);
+        setSearch({ ...search, query: e.target.value });
     }, []);
     const handleLocationChange = useCallback((e) => {
-        setLocation(e.target.value);
+        setSearch({ ...search, location: e.target.value });
     }, []);
     const handleRadiusChange = useCallback((e) => {
-        setRadius(e.target.value);
+        setFiltersApplied({ ...filtersApplied, radius: e.target.value });
     }, []);
-    const handleSearchClick = useCallback(() => dispatch(searchJobsAsync({
-        search,
-        location,
-        radius,
-    })), [search, location, radius]);
+    const handleSearchClick = useCallback(() => {
+        if (!match.isExact) {
+            history.push('/');
+        }
+        dispatch(searchJobsAsync({
+            search,
+            filter: filtersApplied,
+        }))
+    }, [search, filtersApplied.radius, match.isExact]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -59,7 +65,7 @@ function Header() {
                         placeholder="Location"
                         onChange={handleLocationChange}
                     />
-                    <select className="radius-select" value={radius} onChange={(e) => handleRadiusChange(e)}>
+                    <select className="radius-select" value={filtersApplied.radius} onChange={(e) => handleRadiusChange(e)}>
                         {radiusSelectOptions.map(({ label, value }) => (
                             <option key={value} value={value}>{label}</option>
                         ))}
@@ -75,6 +81,11 @@ function Header() {
             </div>
         </header>
     );
+}
+
+Header.propTypes = {
+    filtersApplied: PropTypes.object,
+    setFiltersApplied: PropTypes.func,
 }
 
 export default Header;

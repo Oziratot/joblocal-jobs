@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Pagination from "../Pagination/Pagination";
 import Spinner from "../Button/Spinner";
 import Checkbox from "../Checkbox/Checkbox";
-import transformParamsToApiFormat from "../../utils/transformParamsToApiFormat";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const endpoint = '/search-jobs'
 
@@ -31,13 +31,13 @@ function PageJobsLoading(props) {
     return <PageJobs {...props} jobResultsById={jobResultsById} />
 }
 
-function PageJobs({ match, history, jobResultsById }) {
+function PageJobs({ jobResultsById, filtersApplied, setFiltersApplied }) {
+    const match = useRouteMatch();
+    const history = useHistory();
     const dispatch = useDispatch();
     const isMountedRef = useRef(false);
     const jobs = useSelector((state) => state.jobs.jobs);
     const { facetWorkingTimes, facetQualifications, facetEmploymentTypes, meta, currentParams } = jobs;
-
-    const [filtersApplied, setFiltersApplied] = useState({ working_time: [], qualification: [], employment_type: [] });
 
     const handleFilterChange = useCallback((id, key) => {
         if (filtersApplied[key].includes(id)) {
@@ -52,9 +52,9 @@ function PageJobs({ match, history, jobResultsById }) {
     const employmentTypesValues = useMemo(() => Object.values(facetEmploymentTypes), [facetEmploymentTypes]);
 
     const pagination = useMemo(() =>  meta[endpoint].meta?.pagination, [meta]);
-    const [currentPage, setCurrentPage] = useState(pagination?.currentPage);
+    const [currentPage, setCurrentPage] = useState({ number: pagination?.currentPage });
     const handlePageChange = useCallback((page) => {
-        setCurrentPage(page);
+        setCurrentPage({ number: page });
         window.scrollTo(0, 0)
     }, []);
 
@@ -66,8 +66,6 @@ function PageJobs({ match, history, jobResultsById }) {
         }
     }, [jobResultsById]);
 
-    console.log(transformParamsToApiFormat(currentParams));
-
     useEffect(() => {
         if (isMountedRef.current) {
             dispatch(searchJobsAsync({
@@ -78,7 +76,7 @@ function PageJobs({ match, history, jobResultsById }) {
         }
 
         isMountedRef.current = true;
-    }, [currentPage, filtersApplied]);
+    }, [currentPage, filtersApplied.working_time, filtersApplied.qualification, filtersApplied.employment_type]);
 
     return (
         <>
@@ -155,9 +153,9 @@ function PageJobs({ match, history, jobResultsById }) {
 }
 
 PageJobs.propTypes = {
-    match: PropTypes.object,
-    history: PropTypes.object,
     jobResultsById: PropTypes.object,
+    filtersApplied: PropTypes.object,
+    setFiltersApplied: PropTypes.func,
 }
 
 export default memo(PageJobsLoading);
