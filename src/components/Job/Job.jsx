@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import PropTypes from 'prop-types';
 import moment from "moment";
 import { ReactComponent as LocationIcon } from '../../assets/svg/location.svg'
+import { Link } from "react-router-dom";
 
 function Job({ match, history, attributes }) {
     const { title, previewText, location, company, publications,relativeDetailUrl } = attributes;
@@ -21,7 +22,8 @@ function Job({ match, history, attributes }) {
                 </div>
                 <p className="preview-text">{previewText}</p>
             </div>
-            <img className="company-logo" src={company.logo} alt={`${company.name}-logo`} />
+            <img className="company-logo" src={company.logo} alt="company-logo" />
+            <Link to={`${relativeDetailUrl}`} className="job-link">Learn more...</Link>
         </div>
     );
 }

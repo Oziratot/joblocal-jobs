@@ -1,6 +1,7 @@
 @import "src/styles/variables";
 
 .job {
+  position: relative;
   width: 100%;
   padding: 30px;
   margin-bottom: 20px;
@@ -8,10 +9,21 @@
   border-radius: 12px;
   transition: background-color $trans, box-shadow $trans;
   cursor: pointer;
+  z-index: 2;
 
   &:hover {
     box-shadow: 4px 4px 4px rgba(169, 157, 146, 0.25);
     background-color: #f6f6f6;
+
+    .job-link {
+      opacity: 1;
+    }
+  }
+
+  &.details {
+    cursor: auto;
+    box-shadow: none;
+    background-color: #FFFFFF;
   }
 
   .job-desc {
@@ -61,5 +73,20 @@
     -webkit-line-clamp: 2; /* number of lines to show */
     line-clamp: 2;
     -webkit-box-orient: vertical;
+  }
+
+  .job-link {
+    text-decoration: none;
+    font-size: 12px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0;
+    color: $light-blue;
+    transition: color $trans-fast, opacity $trans-fast;
+
+    &:hover {
+      color: $primary;
+    }
   }
 }

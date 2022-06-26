@@ -8,6 +8,7 @@
   height: 100px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: height $trans-semi-slow;
+  z-index: 3;
 
   &.scrolled {
     height: 75px;
@@ -31,7 +32,7 @@
       height: 50px;
       padding: 0 10px;
       border-radius: 8px;
-      width: 200px;
+      width: 300px;
       margin-right: 15px;
 
       background-image:

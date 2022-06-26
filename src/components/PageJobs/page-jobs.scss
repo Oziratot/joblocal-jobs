@@ -4,11 +4,28 @@
 
   .filters-container {
     flex-shrink: 0;
+    height: fit-content;
     width: 250px;
     padding: 30px;
     margin-right: 20px;
     background-color: #FFFFFF;
     border-radius: 12px;
+
+    .filter-title {
+      font-weight: 600;
+    }
+
+    .filter-list {
+      margin: 15px 0 30px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .filter-item {
+        margin: 0.5em 0;
+      }
+    }
   }
 
   .content {

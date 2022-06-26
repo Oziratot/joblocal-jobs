@@ -206,6 +206,36 @@
   }
 }
 
+.ui-checkbox-container {
+  cursor: pointer;
+
+  .ui-checkbox:before {
+    box-sizing: border-box;
+    height: 12px;
+    width: 12px;
+    border: 2px solid transparent;
+    border-radius: 2px;
+    color: $primary;
+    outline: 2px solid $primary;
+    background-color: white;
+    content: close-quote;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color $trans-fast, border-color $trans-fast;
+  }
+
+  .ui-checkbox:checked:before {
+    background-color: $primary;
+    border-color: white;
+  }
+}
+
+.label {
+  margin-left: 10px;
+}
+
+
+
 @keyframes spin {
   0% { transform: rotate(-360deg); }
   100% { transform: rotate(0deg); }

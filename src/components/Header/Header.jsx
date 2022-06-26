@@ -38,7 +38,7 @@ function Header() {
         search,
         location,
         radius,
-    })), [search, location]);
+    })), [search, location, radius]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);

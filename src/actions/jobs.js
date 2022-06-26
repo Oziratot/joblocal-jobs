@@ -17,7 +17,7 @@ export function searchJobsAsync(params) {
                 .then((res) => {
                     const { latitude: lat, longitude: lon } = res.data.data[0];
                     Api.searchJobs({ location: `${lat},${lon}`, ...rest })
-                        .then((res) => dispatch(searchJobs.success(res.data. params)))
+                        .then((res) => dispatch(searchJobs.success(res.data, params)))
                         .catch((error) => dispatch(searchJobs.failure(error)))
                 })
         } else {
