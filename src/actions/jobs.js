@@ -13,15 +13,15 @@ export function searchJobsAsync(params) {
 
         if (params.search?.location) {
             const { search, ...rest } = params;
-            Api.getCoords({ query: search.location })
+            return Api.getCoords({ query: search.location })
                 .then((res) => {
                     const { latitude: lat, longitude: lon } = res.data.data[0];
-                    Api.searchJobs({ ...rest, search: { ...rest.search, location: `${lat},${lon}` } })
+                    return Api.searchJobs({ ...rest, search: { ...rest.search, location: `${lat},${lon}` } })
                         .then((res) => dispatch(searchJobs.success(res.data, params)))
                         .catch((error) => dispatch(searchJobs.failure(error)))
                 })
         } else {
-            Api.searchJobs(params)
+            return Api.searchJobs(params)
                 .then((res) => dispatch(searchJobs.success(res.data, params)))
                 .catch((error) => dispatch(searchJobs.failure(error)))
         }

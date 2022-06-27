@@ -7,6 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import Spinner from "../Button/Spinner";
 import Checkbox from "../Checkbox/Checkbox";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import Button from "../Button/Button";
 
 const endpoint = '/search-jobs'
 
@@ -47,6 +48,13 @@ function PageJobs({ jobResultsById, filtersApplied, setFiltersApplied }) {
         }
     }, [filtersApplied]);
 
+    const handleFiltersApply = useCallback(() => {
+        dispatch(searchJobsAsync({
+            ...currentParams,
+            filter: filtersApplied,
+        }));
+    }, [currentParams, filtersApplied]);
+
     const workingTimesValues = useMemo(() => Object.values(facetWorkingTimes), [facetWorkingTimes]);
     const qualificationsValues = useMemo(() => Object.values(facetQualifications), [facetQualifications]);
     const employmentTypesValues = useMemo(() => Object.values(facetEmploymentTypes), [facetEmploymentTypes]);
@@ -71,12 +79,11 @@ function PageJobs({ jobResultsById, filtersApplied, setFiltersApplied }) {
             dispatch(searchJobsAsync({
                 ...currentParams,
                 page: currentPage,
-                filter: { ...currentParams.filter, ...filtersApplied },
             }))
         }
 
         isMountedRef.current = true;
-    }, [currentPage, filtersApplied.working_time, filtersApplied.qualification, filtersApplied.employment_type]);
+    }, [currentPage]);
 
     return (
         <>
@@ -127,6 +134,7 @@ function PageJobs({ jobResultsById, filtersApplied, setFiltersApplied }) {
 
                                 ))}
                             </ul>
+                            <Button className="filters-apply-button" onClick={handleFiltersApply}>Apply</Button>
                         </div>
                         <div className="flex-container column">
                             <h2 className="page-title">{`${pagination?.total} jobs found`}</h2>

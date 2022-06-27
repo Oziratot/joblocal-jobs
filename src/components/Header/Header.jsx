@@ -29,21 +29,23 @@ function Header({ filtersApplied, setFiltersApplied }) {
 
     const handleSearchChange = useCallback((e) => {
         setSearch({ ...search, query: e.target.value });
-    }, []);
+    }, [search]);
     const handleLocationChange = useCallback((e) => {
         setSearch({ ...search, location: e.target.value });
-    }, []);
+    }, [search]);
     const handleRadiusChange = useCallback((e) => {
         setFiltersApplied({ ...filtersApplied, radius: e.target.value });
-    }, []);
+    }, [filtersApplied]);
     const handleSearchClick = useCallback(() => {
-        if (!match.isExact) {
-            history.push('/');
-        }
+        setFiltersApplied((prevState) => ({ ...prevState, working_time: [], qualification: [], employment_type: [] }));
         dispatch(searchJobsAsync({
             search,
             filter: filtersApplied,
-        }))
+        })).then(() => {
+                if (!match.isExact) {
+                    history.push('/');
+                }
+            })
     }, [search, filtersApplied.radius, match.isExact]);
 
     useEffect(() => {

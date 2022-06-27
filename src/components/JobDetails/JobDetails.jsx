@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import React, { useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as LocationIcon } from "../../assets/svg/location.svg";
 import { searchJobsAsync } from "../../actions/jobs";
@@ -9,6 +9,14 @@ import PropTypes from "prop-types";
 function useQuery() {
     const { search } = useLocation();
     return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+function ScrollToTopOnMount() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    return null;
 }
 
 function JobDetailsLoading(props) {
@@ -39,6 +47,7 @@ function JobDetails({ jobResultsById }) {
 
     return (
         <div className="page-job-details">
+            <ScrollToTopOnMount />
             <div className="container">
                 <div className="job details">
                     <h1 className="job-title">{job.title}</h1>
