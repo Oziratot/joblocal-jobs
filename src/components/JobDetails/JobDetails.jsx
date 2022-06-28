@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as LocationIcon } from "../../assets/svg/location.svg";
 import { searchJobsAsync } from "../../actions/jobs";
@@ -44,6 +44,10 @@ function JobDetails({ jobResultsById }) {
     const params = useQuery();
     const currentJobId = useMemo(() => params.get("jobadid"), [params]);
     const { attributes: job } = jobResultsById[currentJobId];
+
+    if (!jobResultsById[currentJobId]) {
+        return <Redirect to="/" />
+    }
 
     return (
         <div className="page-job-details">
